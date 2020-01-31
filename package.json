@@ -4,8 +4,10 @@
   "description": "Blog build with MERN stack",
   "main": "server.js",
   "scripts": {
+    "install-client": "npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"cd client && npm start\""
   },
   "author": "pawelsan",
   "license": "MIT",
