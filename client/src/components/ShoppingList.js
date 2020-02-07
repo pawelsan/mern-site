@@ -10,17 +10,22 @@ import {
     TransitionGroup
 } from 'react-transition-group';
 import uuid from 'uuid';
+// connect is from getting the state from redux to react
+import { connect } from 'react-redux';
+import { getItems } from '../actions/itemActions';
+// propTypes is a form of validation in React
+import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
-    state = {
-        items: [
-            { id: uuid(), name: 'first item' },
-            { id: uuid(), name: 'second item' },
-            { id: uuid(), name: 'third item' }
-        ]
-    }
+
+    componentDidMount() {
+        this.props.getItems();
+    };
+
     render() {
-        const { items } = this.state;
+        // props.item represents the state object from redux
+        // items is our array from that state declared in the itemReducer
+        const { items } = this.props.item;
         return (
             <Container>
                 <Button
@@ -62,5 +67,20 @@ class ShoppingList extends Component {
         )
     }
 }
+ShoppingList.propTypes = {
+    // so we are passing here what is the state (from the store via connect) and what are the actions on the state (itemReducer)
+    getItems: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired
+}
 
-export default ShoppingList;
+const mapStateToProps = (state) => ({
+    // state.item comes from the root reducer
+    // we are here mapping the redux state to a component property
+    item: state.item
+})
+
+export default connect(
+    mapStateToProps,
+    { getItems }
+)
+    (ShoppingList);
