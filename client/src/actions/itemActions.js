@@ -12,4 +12,12 @@ export const getItems = () => {
         // this type is then used as action.type in switch in itemReducer
         type: GET_ITEMS
     }
+};
+// deleteItem takes in the id because it needs to know which one to delete
+export const deleteItem = id => {
+    return {
+        // this type is then used as action.type in switch in itemReducer
+        type: DELETE_ITEM,
+        payload: id
+    }
 }

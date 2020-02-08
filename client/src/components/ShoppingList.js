@@ -9,10 +9,11 @@ import {
     CSSTransition,
     TransitionGroup
 } from 'react-transition-group';
-import uuid from 'uuid';
+
 // connect is from getting the state from redux to react
 import { connect } from 'react-redux';
-import { getItems } from '../actions/itemActions';
+// We are bringing in the actions
+import { getItems, deleteItem } from '../actions/itemActions';
 // propTypes is a form of validation in React
 import PropTypes from 'prop-types';
 
@@ -20,6 +21,10 @@ class ShoppingList extends Component {
 
     componentDidMount() {
         this.props.getItems();
+    };
+
+    onDeleteClick = id => {
+        this.props.deleteItem(id);
     };
 
     render() {
@@ -35,7 +40,7 @@ class ShoppingList extends Component {
                         const name = prompt('Enter item');
                         if (name) {
                             this.setState(state => ({
-                                items: [...state.items, { id: uuid(), name }]
+                                items: [...state.items, { name }]
                             }));
                         }
                     }}
@@ -51,11 +56,7 @@ class ShoppingList extends Component {
                                         className="remove-btn"
                                         color="danger"
                                         size="sm"
-                                        onClick={() => {
-                                            this.setState(state => ({
-                                                items: state.items.filter(item => item.id !== id)
-                                            }))
-                                        }}
+                                        onClick={this.onDeleteClick.bind(this, id)}
                                     >&times;</Button>
                                     {name}
                                 </ListGroupItem>
@@ -81,6 +82,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { getItems }
+    // any action we import, we need to put here as well
+    // they are accessible through this.props.deleteItem etc
+    { getItems, deleteItem }
 )
     (ShoppingList);
