@@ -21,3 +21,11 @@ export const deleteItem = id => {
         payload: id
     }
 }
+
+export const addItem = item => {
+    return {
+        // this type is then used as action.type in switch in itemReducer
+        type: ADD_ITEM,
+        payload: item
+    }
+}

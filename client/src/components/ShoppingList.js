@@ -33,20 +33,6 @@ class ShoppingList extends Component {
         const { items } = this.props.item;
         return (
             <Container>
-                <Button
-                    color="dark"
-                    style={{ marginBottom: '2rem' }}
-                    onClick={() => {
-                        const name = prompt('Enter item');
-                        if (name) {
-                            this.setState(state => ({
-                                items: [...state.items, { name }]
-                            }));
-                        }
-                    }}
-                >
-                    Add item
-                </Button>
                 <ListGroup>
                     <TransitionGroup className="shopping-list">
                         {items.map(({ id, name }) => (
@@ -74,7 +60,7 @@ ShoppingList.propTypes = {
     item: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     // state.item comes from the root reducer
     // we are here mapping the redux state to a component property
     item: state.item

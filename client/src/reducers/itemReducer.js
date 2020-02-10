@@ -23,6 +23,13 @@ export default function (state = initialState, action) {
                 // action.payload is the id from itemActions
                 items: state.items.filter(item => item.id !== action.payload)
             };
+        case ADD_ITEM:
+            return {
+                // we are spreading the state beacouse we cannot directly change it, we have to make a copy of it
+                ...state,
+                // action.payload is the item from itemActions
+                items: [action.payload, ...state.items]
+            };
         default:
             return state;
     }
